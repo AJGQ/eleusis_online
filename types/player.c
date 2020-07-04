@@ -1,46 +1,19 @@
 #include "card.h"
 #include "player.h"
 #include <stdlib.h>
-#include <stdbool.h>
+#include <fcntl.h>
 
-void player_init(Player* player, Card* cards, size_t len_cards, size_t capacity){
-    player->cards = cards;
-    player->len_cards = len_cards;
-    player->capacity = capacity;
+void player_init(Player* player, int sockfd){
+    hand_init(player->hand);
+    player->sockfd = sockfd;
 }
 
-int player_give(Player* player, Card card){
-    if(player->len_cards >= player->capacity)
-        return 1;
-
-    player->cards[player->len_cards++] = card;
-    return 0;
+void player_give_hand(Player* player, Hand* hand){
+    player->hand = hand;
 }
 
-int player_take(Player* player, Card card){
-    if(player->len_cards == 0)
-        return 1;
-    
-    size_t idx_take;
-    if(player_index_card(player, card, &idx_take)){
-        for(size_t idx = idx_take; idx + 1 < player->len_cards; idx++){
-            player->cards[idx] = player->cards[idx+1];
-        }
-        player->len_cards--;
-        return 0;
-    }
-
-    return 1;
-}
-
-bool player_index_card(Player* player, Card card, size_t* idx_ptr){
-    for(size_t idx = 0; idx < player->len_cards; idx++){
-        if(card_equals(player->cards[idx], card)){
-            if(idx_ptr){
-                *idx_ptr = idx;
-            }
-            return true;
-        }
-    }
-    return false;
+void player_send_hand(Player* player){
+    char* buf = (char*)malloc(MAX_HAND*4*sizeof(char));
+    size_t len = hand_print(player->hand, buf);
+    write(player->sockfd, buf, len);
 }

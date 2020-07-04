@@ -1,6 +1,7 @@
 #ifndef CARD_H
 #define CARD_H
 
+#include <stdlib.h>
 #include <stdbool.h>
 
 enum suit {
@@ -35,5 +36,10 @@ bool card_equals(Card, Card);
 
 void card_by_id(int, Card*);
 void card_id(Card, int*);
+
+char card_suit_char(Suit);
+char card_value_char(Value);
+
+size_t card_print(Card*, char*);
 
 #endif

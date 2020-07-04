@@ -1,4 +1,5 @@
 #include "card.h"
+#include <assert.h>
 #include <stdbool.h>
 
 void card_init(Card* card, Value value, Suit suit){
@@ -36,4 +37,35 @@ void card_by_id(int id, Card* card){
 // suit + value*4
 void card_id(Card card, int* id){
     *id = card.suit + card.value*4;
+}
+
+char card_suit_char(Suit suit){
+    switch(suit){
+    case CLUBS: return 'C';
+    case DIAMONDS: return 'D';
+    case HEARTS: return 'H';
+    case SPADES: return 'S';
+    default: return '?';
+    }
+}
+
+char card_value_char(Value value){
+    assert(value >= 2 && value <= ACE);
+    if(value >= 2 && value <= 7){
+        return '0' + value;
+    }
+
+    switch(value){
+    case JACK: return 'J';
+    case QUEEN: return 'Q';
+    case KING: return 'K';
+    case ACE: return 'A';
+    default: return '?';
+    }
+}
+
+size_t card_print(Card* card, char* buff){
+    buff[0] = card_value_char(card->value);
+    buff[1] = card_suit_char(card->suit);
+    return 2;
 }

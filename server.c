@@ -11,14 +11,15 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include "types/player.h"
+#include "types/game.h"
+
 int main(int argc, char **argv) {
-    char buffer[BUFSIZ];
     char protoname[] = "tcp";
     struct protoent *protoent;
     int enable = 1;
     int server_sockfd, client_sockfd;
     socklen_t client_len;
-    ssize_t nbytes_read;
     struct sockaddr_in client_address, server_address;
     unsigned short server_port = 12345;
 
@@ -83,13 +84,21 @@ int main(int argc, char **argv) {
     // in sys/socket.h
     // listens for requests with a queu of length 8,
     // ie. can't have 9 or more clients connected
-    if (listen(server_sockfd, 8) == -1) {
+    if (listen(server_sockfd, MAX_PLAYERS) == -1) {
         perror("listen");
         exit(EXIT_FAILURE);
     }
     fprintf(stderr, "listening on port %d\n", server_port);
 
-    while (1) {
+    Player* players = (Player*)malloc(MAX_PLAYERS*sizeof(Player));
+    size_t len_players = 0;
+    Game game;
+
+    game_init(&game, players, len_players);
+
+    // for now only 2 players
+    int num_players = 0;
+    while (num_players < 2) {
         client_len = sizeof(client_address);
         // in sys/socket.h
         // it populates the client_address and client_len 
@@ -100,15 +109,15 @@ int main(int argc, char **argv) {
                 (struct sockaddr*)&client_address,
                 &client_len
                 );
-        // in unistd.h 
-        // reads client_sockfd to a buffer
-        // like a file stream or a pipe (nice)
-        while ((nbytes_read = read(client_sockfd, buffer, BUFSIZ)) > 0) {
-            printf("received:\n");
-            write(STDOUT_FILENO, buffer, nbytes_read);
-            write(client_sockfd, buffer, nbytes_read);
-        }
-        close(client_sockfd);
+
+        player_init(&players[len_players++], client_sockfd);
+        num_players++;
     }
+
+    // give 14 cards to each
+    game_give_n_to_all(&game, 14);
+    // send 14 cards to each
+    game_send_hand_to_all(&game);
+    
     return EXIT_SUCCESS;
 }
