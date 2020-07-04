@@ -33,4 +33,7 @@ void card_init(Card*, Value, Suit);
 int card_order(Card, Card);
 bool card_equals(Card, Card);
 
+void card_by_id(int, Card*);
+void card_id(Card, int*);
+
 #endif

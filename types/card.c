@@ -26,3 +26,14 @@ int card_order(Card c1, Card c2){
 bool card_equals(Card c1, Card c2){
     return card_order(c1, c2) == 0;
 }
+
+void card_by_id(int id, Card* card){
+    Suit suit = id % 4;
+    Value value = id / 4;
+    card_init(card, value, suit);
+}
+
+// suit + value*4
+void card_id(Card card, int* id){
+    *id = card.suit + card.value*4;
+}

@@ -7,8 +7,8 @@
 # server
 
 ## stores
-I want the server to store all the info, so that the client can't just send bullshit,
-for example when in the middle of the game you want to 
+I want the server to store all the info, so that the client can't just send bullshit.
 
 # client
 maybe cute a ncurses client
+but for now the server is the most important
