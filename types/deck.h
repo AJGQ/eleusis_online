@@ -6,7 +6,7 @@
 #include "card.h"
 
 #define MAX_CARDS 80
-#define MAX_NORMAL 80
+#define MAX_NORMAL MAX_CARDS>>1
 
 struct deck {
     Card** cards;
@@ -20,6 +20,6 @@ void deck_init(Deck*);
 void deck_shuffle(Deck*);
 
 int deck_put(Deck*, Card*);
-int deck_get(Deck*, Card*);
+int deck_get(Deck*, Card**);
 
 #endif

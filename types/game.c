@@ -14,7 +14,8 @@ void game_give_n_to_all(Game* game, size_t n){
         Card** cards = (Card**)malloc(n*sizeof(Card*));
 
         for(size_t card_idx = 0; card_idx < n; card_idx++){
-            int err = deck_get(&game->deck, cards[card_idx]);
+            cards[card_idx] = (Card*)malloc(sizeof(Card));
+            int err = deck_get(&game->deck, &cards[card_idx]);
             assert(err == 0);
         }
 

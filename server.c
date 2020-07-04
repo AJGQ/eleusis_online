@@ -1,5 +1,3 @@
-#define _XOPEN_SOURCE 700
-
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -110,7 +108,7 @@ int main(int argc, char **argv) {
                 &client_len
                 );
 
-        player_init(&players[len_players++], client_sockfd);
+        player_init(&players[game.len_players++], client_sockfd);
         num_players++;
     }
 
