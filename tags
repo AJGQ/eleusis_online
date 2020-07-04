@@ -1,0 +1,55 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+ACE	types/card.h	/^    ACE = 11$/;"	e	enum:value
+AUX	Makefile	/^AUX = types\/*.c$/;"	m
+CARD_H	types/card.h	2;"	d
+CLUBS	types/card.h	/^    CLUBS,$/;"	e	enum:suit
+Card	types/card.h	/^typedef struct card Card;$/;"	t	typeref:struct:card
+DECK_H	types/deck.h	2;"	d
+DIAMONDS	types/card.h	/^    DIAMONDS,$/;"	e	enum:suit
+Deck	types/deck.h	/^typedef struct deck Deck;$/;"	t	typeref:struct:deck
+FLAGS	Makefile	/^FLAGS = -O2 -Wall -Wextra$/;"	m
+FLAGS_DEBUG	Makefile	/^FLAGS_DEBUG = -g -O0 -Wall -Wextra$/;"	m
+HEARTS	types/card.h	/^    HEARTS,$/;"	e	enum:suit
+JACK	types/card.h	/^    JACK = 8,$/;"	e	enum:value
+KING	types/card.h	/^    KING = 10,$/;"	e	enum:value
+LIBS	Makefile	/^LIBS = -pthread$/;"	m
+MAX_CARDS	types/deck.h	8;"	d
+MAX_NORMAL	types/deck.h	9;"	d
+PLAYER_H	types/player.h	2;"	d
+Player	types/player.h	/^typedef struct player Player;$/;"	t	typeref:struct:player
+QUEEN	types/card.h	/^    QUEEN = 9,$/;"	e	enum:value
+SPADES	types/card.h	/^    SPADES$/;"	e	enum:suit
+Suit	types/card.h	/^typedef enum suit Suit;$/;"	t	typeref:enum:suit
+Value	types/card.h	/^typedef enum value Value;$/;"	t	typeref:enum:value
+_XOPEN_SOURCE	server.c	1;"	d	file:
+capacity	types/player.h	/^    size_t capacity;$/;"	m	struct:player
+card	types/card.h	/^struct card {$/;"	s
+card_by_id	types/card.c	/^void card_by_id(int id, Card* card){$/;"	f
+card_equals	types/card.c	/^bool card_equals(Card c1, Card c2){$/;"	f
+card_id	types/card.c	/^void card_id(Card card, int* id){$/;"	f
+card_init	types/card.c	/^void card_init(Card* card, Value value, Suit suit){$/;"	f
+card_order	types/card.c	/^int card_order(Card c1, Card c2){$/;"	f
+cards	types/deck.h	/^    Card** cards;$/;"	m	struct:deck
+cards	types/player.h	/^    Card* cards;$/;"	m	struct:player
+deck	types/deck.h	/^struct deck {$/;"	s
+deck_get	types/deck.c	/^int deck_get(Deck* deck, Card* card){$/;"	f
+deck_init	types/deck.c	/^void deck_init(Deck* deck){$/;"	f
+deck_put	types/deck.c	/^int deck_put(Deck* deck, Card* card){$/;"	f
+deck_shuffle	types/deck.c	/^void deck_shuffle(Deck* deck){$/;"	f
+len_cards	types/deck.h	/^    size_t len_cards;$/;"	m	struct:deck
+len_cards	types/player.h	/^    size_t len_cards;$/;"	m	struct:player
+main	server.c	/^int main(int argc, char **argv) {$/;"	f
+player	types/player.h	/^struct player {$/;"	s
+player_give	types/player.c	/^int player_give(Player* player, Card card){$/;"	f
+player_index_card	types/player.c	/^bool player_index_card(Player* player, Card card, size_t* idx_ptr){$/;"	f
+player_init	types/player.c	/^void player_init(Player* player, Card* cards, size_t len_cards, size_t capacity){$/;"	f
+player_take	types/player.c	/^int player_take(Player* player, Card card){$/;"	f
+suit	types/card.h	/^    Suit suit;$/;"	m	struct:card
+suit	types/card.h	/^enum suit {$/;"	g
+value	types/card.h	/^    Value value;$/;"	m	struct:card
+value	types/card.h	/^enum value {$/;"	g

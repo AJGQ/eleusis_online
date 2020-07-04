@@ -4,6 +4,7 @@ with import <nixpkgs> {}; {
         buildInputs = [ gcc
                         gdb
                         pkgconfig
+                        ctags
                       ];
     };
 }
