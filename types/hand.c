@@ -5,6 +5,9 @@
 
 void hand_init(Hand* hand){
     hand->cards = (Card**)malloc(MAX_HAND*sizeof(Card*));
+    for(size_t card_idx = 0; card_idx < MAX_HAND; card_idx++){
+        hand->cards[card_idx] = (Card*)malloc(sizeof(Card));
+    }
     hand->len_cards = 0;
 }
 

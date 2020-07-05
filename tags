@@ -13,7 +13,7 @@ DECK_H	types/deck.h	2;"	d
 DIAMONDS	types/card.h	/^    DIAMONDS,$/;"	e	enum:suit
 Deck	types/deck.h	/^typedef struct deck Deck;$/;"	t	typeref:struct:deck
 FLAGS	Makefile	/^FLAGS = -O2 -Wall -Wextra$/;"	m
-FLAGS_DEBUG	Makefile	/^FLAGS_DEBUG = -g -O0 -Wall -Wextra$/;"	m
+FLAGS_DEBUG	Makefile	/^FLAGS_DEBUG = -g -Wall -Wextra$/;"	m
 GAME_H	types/game.h	2;"	d
 Game	types/game.h	/^typedef struct game Game;$/;"	t	typeref:struct:game
 HAND_H	types/hand.h	2;"	d
@@ -22,48 +22,74 @@ Hand	types/hand.h	/^typedef struct hand Hand;$/;"	t	typeref:struct:hand
 JACK	types/card.h	/^    JACK = 8,$/;"	e	enum:value
 KING	types/card.h	/^    KING = 10,$/;"	e	enum:value
 LIBS	Makefile	/^LIBS = -pthread$/;"	m
+LOCK	types/game.h	11;"	d
 MAX_CARDS	types/deck.h	8;"	d
 MAX_HAND	types/hand.h	8;"	d
 MAX_NORMAL	types/deck.h	9;"	d
-MAX_PLAYERS	types/game.h	8;"	d
+MAX_PLAYERS	types/game.h	10;"	d
+N	pthreads.c	4;"	d	file:
 PLAYER_H	types/player.h	2;"	d
 Player	types/player.h	/^typedef struct player Player;$/;"	t	typeref:struct:player
 QUEEN	types/card.h	/^    QUEEN = 9,$/;"	e	enum:value
 SPADES	types/card.h	/^    SPADES$/;"	e	enum:suit
 Suit	types/card.h	/^typedef enum suit Suit;$/;"	t	typeref:enum:suit
+UNLOCK	types/game.h	12;"	d
 Value	types/card.h	/^typedef enum value Value;$/;"	t	typeref:enum:value
-_XOPEN_SOURCE	server.c	1;"	d	file:
+address	types/player.h	/^    struct sockaddr_in address;$/;"	m	struct:player	typeref:struct:player::sockaddr_in
 card	types/card.h	/^struct card {$/;"	s
 card_by_id	types/card.c	/^void card_by_id(int id, Card* card){$/;"	f
 card_equals	types/card.c	/^bool card_equals(Card c1, Card c2){$/;"	f
 card_id	types/card.c	/^void card_id(Card card, int* id){$/;"	f
 card_init	types/card.c	/^void card_init(Card* card, Value value, Suit suit){$/;"	f
 card_order	types/card.c	/^int card_order(Card c1, Card c2){$/;"	f
+card_print	types/card.c	/^size_t card_print(Card* card, char* buff){$/;"	f
+card_suit_char	types/card.c	/^char card_suit_char(Suit suit){$/;"	f
+card_value_char	types/card.c	/^char card_value_char(Value value){$/;"	f
 cards	types/deck.h	/^    Card** cards;$/;"	m	struct:deck
 cards	types/hand.h	/^    Card** cards;$/;"	m	struct:hand
 deck	types/deck.h	/^struct deck {$/;"	s
 deck	types/game.h	/^    Deck deck;$/;"	m	struct:game
-deck_get	types/deck.c	/^int deck_get(Deck* deck, Card* card){$/;"	f
+deck_get	types/deck.c	/^int deck_get(Deck* deck, Card** card){$/;"	f
 deck_init	types/deck.c	/^void deck_init(Deck* deck){$/;"	f
 deck_put	types/deck.c	/^int deck_put(Deck* deck, Card* card){$/;"	f
 deck_shuffle	types/deck.c	/^void deck_shuffle(Deck* deck){$/;"	f
 game	types/game.h	/^struct game {$/;"	s
-game_init	types/game.c	/^void game_init(Game* game, Player* players, size_t len_players){$/;"	f
+game_give_n_to_all	types/game.c	/^void game_give_n_to_all(Game* game, size_t n){$/;"	f
+game_init	types/game.c	/^void game_init(Game* game){$/;"	f
+game_play	types/game.c	/^void game_play(Game* game){$/;"	f
+game_send_hand_to_all	types/game.c	/^void game_send_hand_to_all(Game* game){$/;"	f
+game_wait_players	types/game.c	/^void game_wait_players(Game* game, int server_sockfd){$/;"	f
 hand	types/hand.h	/^struct hand {$/;"	s
 hand	types/player.h	/^    Hand* hand;$/;"	m	struct:player
+hand_create	types/hand.c	/^void hand_create(Hand* hand, Card** cards, size_t len_cards){$/;"	f
 hand_index_card	types/hand.c	/^bool hand_index_card(Hand* hand, Card card, size_t* idx_ptr){$/;"	f
-hand_init	types/hand.c	/^void hand_init(Hand* hand, Card** cards, size_t len_cards){$/;"	f
+hand_init	types/hand.c	/^void hand_init(Hand* hand){$/;"	f
 hand_insert	types/hand.c	/^int hand_insert(Hand* hand, Card* card){$/;"	f
+hand_print	types/hand.c	/^int hand_print(Hand* hand, char* buf){$/;"	f
 hand_remove	types/hand.c	/^int hand_remove(Hand* hand, Card card){$/;"	f
+inc_x	pthreads.c	/^void *inc_x(void *x_void_ptr)$/;"	f
 len_cards	types/deck.h	/^    size_t len_cards;$/;"	m	struct:deck
 len_cards	types/hand.h	/^    size_t len_cards;$/;"	m	struct:hand
 len_players	types/game.h	/^    size_t len_players;$/;"	m	struct:game
+len_socket	types/player.h	/^    socklen_t len_socket;$/;"	m	struct:player
+main	client.c	/^int main(int argc, char **argv) {$/;"	f
+main	pthreads.c	/^int main()$/;"	f
 main	server.c	/^int main(int argc, char **argv) {$/;"	f
+new_player	types/game.h	/^    pthread_mutex_t* new_player;$/;"	m	struct:game
+obj	pthreads.c	/^struct obj {$/;"	s	file:
 player	types/player.h	/^struct player {$/;"	s
-player_init	types/player.c	/^void player_init(Player* player, Hand* hand){$/;"	f
+player_give_hand	types/player.c	/^void player_give_hand(Player* player, Hand* hand){$/;"	f
+player_init	types/player.c	/^void player_init(Player* player, int server_sockfd){$/;"	f
+player_send_hand	types/player.c	/^void player_send_hand(Player* player){$/;"	f
 players	types/game.h	/^    Player* players;$/;"	m	struct:game
+ready	types/game.h	/^    bool ready;$/;"	m	struct:game
 sequence	types/game.h	/^    Card sequence;$/;"	m	struct:game
+sockfd	types/player.h	/^    int sockfd;$/;"	m	struct:player
 suit	types/card.h	/^    Suit suit;$/;"	m	struct:card
 suit	types/card.h	/^enum suit {$/;"	g
+thread	types/game.h	/^    pthread_t* thread;$/;"	m	struct:game
+thread	types/player.h	/^    pthread_t* thread;$/;"	m	struct:player
 value	types/card.h	/^    Value value;$/;"	m	struct:card
 value	types/card.h	/^enum value {$/;"	g
+x	pthreads.c	/^    int x;$/;"	m	struct:obj	file:
+x_mutex	pthreads.c	/^    pthread_mutex_t x_mutex;$/;"	m	struct:obj	file:

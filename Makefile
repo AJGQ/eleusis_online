@@ -6,8 +6,8 @@ FLAGS_DEBUG = -g -Wall -Wextra
 AUX = types/*.c
 
 all: 
-	gcc $(FLAGS) $(LIBS) -o server server.c $(AUX) &&	\
-	gcc $(FLAGS) $(LIBS) -o client client.c
+	gcc $(FLAGS_DEBUG) $(LIBS) -o server server.c $(AUX) &&	\
+	gcc $(FLAGS_DEBUG) $(LIBS) -o client client.c
 
 
 clean:

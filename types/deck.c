@@ -7,14 +7,17 @@
 
 void deck_init(Deck* deck){
     deck->cards = (Card**)malloc(MAX_CARDS*sizeof(Card*));
+    for(size_t card_idx = 0; card_idx < MAX_CARDS; card_idx++){
+        deck->cards[card_idx] = (Card*)malloc(sizeof(Card));
+    }
     deck->len_cards = 0;
 
     int put_err1 = 0;
     int put_err2 = 0;
 
     for(size_t card_id = 0; card_id < MAX_NORMAL; card_id++){
-        Card* card1 = (Card*) malloc(sizeof(Card)); 
-        Card* card2 = (Card*) malloc(sizeof(Card));
+        Card* card1 = deck->cards[2*card_id]; 
+        Card* card2 = deck->cards[2*card_id + 1];
         card_by_id(card_id, card1);
         card_by_id(card_id, card2);
 

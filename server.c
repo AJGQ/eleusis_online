@@ -9,6 +9,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include <pthread.h>
 #include "types/player.h"
 #include "types/game.h"
 
@@ -16,9 +17,8 @@ int main(int argc, char **argv) {
     char protoname[] = "tcp";
     struct protoent *protoent;
     int enable = 1;
-    int server_sockfd, client_sockfd;
-    socklen_t client_len;
-    struct sockaddr_in client_address, server_address;
+    int server_sockfd;
+    struct sockaddr_in server_address;
     unsigned short server_port = 12345;
 
     if (argc > 1) {
@@ -88,34 +88,14 @@ int main(int argc, char **argv) {
     }
     fprintf(stderr, "listening on port %d\n", server_port);
 
-    Player* players = (Player*)malloc(MAX_PLAYERS*sizeof(Player));
-    size_t len_players = 0;
     Game game;
 
-    game_init(&game, players, len_players);
+    game_init(&game);
 
-    // for now only 2 players
-    int num_players = 0;
-    while (num_players < 2) {
-        client_len = sizeof(client_address);
-        // in sys/socket.h
-        // it populates the client_address and client_len 
-        // coming from server_sockfd
-        // ... only connects to one at a time
-        client_sockfd = accept(
-                server_sockfd,
-                (struct sockaddr*)&client_address,
-                &client_len
-                );
-
-        player_init(&players[game.len_players++], client_sockfd);
-        num_players++;
-    }
-
-    // give 14 cards to each
-    game_give_n_to_all(&game, 14);
-    // send 14 cards to each
-    game_send_hand_to_all(&game);
+    //while(1){
+        game_wait_players(&game, server_sockfd);
+        game_play(&game);
+    //}
     
     return EXIT_SUCCESS;
 }

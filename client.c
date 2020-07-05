@@ -17,7 +17,6 @@ int main(int argc, char **argv) {
     char *server_hostname = "127.0.0.1";
     in_addr_t in_addr;
     int sockfd;
-    size_t getline_buffer = 0;
     ssize_t nbytes_read;
     struct hostent *hostent;
     /* This is the struct used by INet addresses. */
