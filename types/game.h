@@ -8,8 +8,8 @@
 #include "deck.h"
 
 #define MAX_PLAYERS 8
-#define LOCK pthread_mutex_lock(game->new_player)
-#define UNLOCK pthread_mutex_unlock(game->new_player)
+#define LOCK_PR pthread_mutex_lock(game->players_ready_mutex)
+#define UNLOCK_PR pthread_mutex_unlock(game->players_ready_mutex)
 
 
 struct game {
@@ -18,8 +18,8 @@ struct game {
     Deck deck;
     Card sequence;
     pthread_t* thread;
-    bool ready;
-    pthread_mutex_t* new_player;
+    size_t players_ready;
+    pthread_mutex_t* players_ready_mutex;
 };
 
 typedef struct game Game;
@@ -27,7 +27,7 @@ typedef struct game Game;
 void game_init(Game*);
 
 void game_wait_players(Game*, int);
-void game_wait_ready(Game*);
+void* game_wait_ready(void*);
 
 void game_play(Game*);
 void game_give_n_to_all(Game*, size_t);

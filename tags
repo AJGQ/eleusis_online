@@ -22,7 +22,7 @@ Hand	types/hand.h	/^typedef struct hand Hand;$/;"	t	typeref:struct:hand
 JACK	types/card.h	/^    JACK = 8,$/;"	e	enum:value
 KING	types/card.h	/^    KING = 10,$/;"	e	enum:value
 LIBS	Makefile	/^LIBS = -pthread$/;"	m
-LOCK	types/game.h	11;"	d
+LOCK_NP	types/game.h	11;"	d
 MAX_CARDS	types/deck.h	8;"	d
 MAX_HAND	types/hand.h	8;"	d
 MAX_NORMAL	types/deck.h	9;"	d
@@ -33,7 +33,7 @@ Player	types/player.h	/^typedef struct player Player;$/;"	t	typeref:struct:playe
 QUEEN	types/card.h	/^    QUEEN = 9,$/;"	e	enum:value
 SPADES	types/card.h	/^    SPADES$/;"	e	enum:suit
 Suit	types/card.h	/^typedef enum suit Suit;$/;"	t	typeref:enum:suit
-UNLOCK	types/game.h	12;"	d
+UNLOCK_NP	types/game.h	12;"	d
 Value	types/card.h	/^typedef enum value Value;$/;"	t	typeref:enum:value
 address	types/player.h	/^    struct sockaddr_in address;$/;"	m	struct:player	typeref:struct:player::sockaddr_in
 card	types/card.h	/^struct card {$/;"	s
@@ -79,10 +79,11 @@ new_player	types/game.h	/^    pthread_mutex_t* new_player;$/;"	m	struct:game
 obj	pthreads.c	/^struct obj {$/;"	s	file:
 player	types/player.h	/^struct player {$/;"	s
 player_give_hand	types/player.c	/^void player_give_hand(Player* player, Hand* hand){$/;"	f
-player_init	types/player.c	/^void player_init(Player* player, int server_sockfd){$/;"	f
+player_init	types/player.c	/^void player_init(Player* player, int server_sockfd, int* players_ready){$/;"	f
 player_send_hand	types/player.c	/^void player_send_hand(Player* player){$/;"	f
 players	types/game.h	/^    Player* players;$/;"	m	struct:game
-ready	types/game.h	/^    bool ready;$/;"	m	struct:game
+players_ready	types/game.h	/^    int players_ready;$/;"	m	struct:game
+players_ready	types/player.h	/^    int* players_ready;$/;"	m	struct:player
 sequence	types/game.h	/^    Card sequence;$/;"	m	struct:game
 sockfd	types/player.h	/^    int sockfd;$/;"	m	struct:player
 suit	types/card.h	/^    Suit suit;$/;"	m	struct:card

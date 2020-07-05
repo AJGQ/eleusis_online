@@ -1,6 +1,7 @@
 #include "game.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -11,17 +12,33 @@ void game_init(Game* game){
     deck_init(&game->deck);
     card_init(&game->sequence, ACE, SPADES);
     game->thread = (pthread_t*)malloc(sizeof(pthread_t));
-    game->ready = false;
-    game->new_player = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
+    game->players_ready = 0;
+    game->players_ready_mutex = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
+    pthread_mutex_init(game->players_ready_mutex, NULL);
 }
 
 void game_wait_players(Game* game, int server_sockfd){
-    // for now only 2 players
-    while (game->len_players < 2) {
+    while (game->players_ready < game->len_players || game->len_players == 0) {
 
-        player_init( &game->players[game->len_players], server_sockfd);
-
+        Player* player = &game->players[game->len_players];
+        player_init( player
+                , server_sockfd
+                , &game->players_ready
+                , game->players_ready_mutex);
         game->len_players++;
+
+        LOCK_PR;
+        if(game->players_ready == game->len_players - 1
+                && game->len_players != 1){
+            break;
+        }
+        UNLOCK_PR;
+
+        if(pthread_create(player->thread, NULL, player_wait_ready, player)){
+            fprintf(stderr, "Error creating thread\n");
+            exit(EXIT_FAILURE);
+        }
+
     }
 
 }

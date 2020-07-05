@@ -15,9 +15,11 @@ int main(int argc, char **argv) {
     char protoname[] = "tcp";
     struct protoent *protoent;
     char *server_hostname = "127.0.0.1";
+    char *user_input = NULL;
     in_addr_t in_addr;
     int sockfd;
-    ssize_t nbytes_read;
+    size_t getline_buffer = 0;
+    ssize_t nbytes_read, user_input_len;
     struct hostent *hostent;
     /* This is the struct used by INet addresses. */
     struct sockaddr_in sockaddr_in;
@@ -61,6 +63,17 @@ int main(int argc, char **argv) {
     if (connect(sockfd, (struct sockaddr*)&sockaddr_in, sizeof(sockaddr_in)) == -1) {
         perror("connect");
         return EXIT_FAILURE;
+    }
+
+    user_input_len = getline(&user_input, &getline_buffer, stdin);
+    if (user_input_len == -1) {
+        perror("getline");
+        exit(EXIT_FAILURE);
+    }
+
+    if (write(sockfd, user_input, user_input_len) == -1) {
+        perror("write");
+        exit(EXIT_FAILURE);
     }
 
     nbytes_read = read(sockfd, buffer, BUFSIZ);
