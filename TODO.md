@@ -1,7 +1,8 @@
 # for now
 [X] shuffle a deck
-[-] organize the players as they enter, when 2 are in go to the game
-[-] send the info of the associated cards, to each player (for now 4 or less)
+[-] wait for the players readiness, max 8 players
+    [X] 2 players can play the game
+[X] send the info of the associated cards, to each player (for now 4 or less)
 
 
 # server
